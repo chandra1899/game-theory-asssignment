@@ -2,7 +2,7 @@
 
 import { atom } from 'recoil'
 
-export const globalcenter = atom({
+export const globalcenter = atom<any>({
     key: 'globalcenter',
-    default : "default"
+    default : undefined
   });

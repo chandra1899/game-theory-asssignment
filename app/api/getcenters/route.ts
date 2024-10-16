@@ -11,13 +11,6 @@ import Center from '@/models/centers';
 export async function POST(req:Request){
     try {
         const body = await req.json()
-        // const parsedInput = inputTypes.safeParse(body)
-        // if(!parsedInput.success){
-        //     return NextResponse.json({message:parsedInput.error},{status:411})
-        // }
-        console.log("in create center", body);
-        
-        
         await connectMongoDB()
         let centers = await Center.find({})
         

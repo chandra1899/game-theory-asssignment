@@ -3,9 +3,7 @@ import { boolean } from 'zod';
 
 const blockedSchema = new Schema({
     center : {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "Center"
+        type: String
     },
     sport : {
         type : String

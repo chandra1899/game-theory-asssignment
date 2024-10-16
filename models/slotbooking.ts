@@ -7,9 +7,7 @@ const slotbookingSchema = new Schema({
         required : true
     },
     center : {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "Center"
+        type: String
     },
     sport : {
         type : String

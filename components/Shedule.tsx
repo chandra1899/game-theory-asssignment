@@ -10,12 +10,17 @@ import { centerarray } from '@/store/atom/centerarray'
 import CenterComponent from './CenterComponent'
 import SportsComponent from './SportsComponent'
 import { sportarray } from '@/store/atom/sportarray'
+import { globalsport } from '@/store/atom/globalsport'
+import { globalcenter } from '@/store/atom/globalcenter'
+import Nothing from './Nothing'
 
 const Shedule = () => {
     const setcenterarray = useSetRecoilState(centerarray)
     const centerarrayVal = useRecoilValue(centerarray)
     const sportarrayVal = useRecoilValue(sportarray)
     const globaldateVal = useRecoilValue(globaldate)
+    const globalcenterVal = useRecoilValue(globalcenter)
+    const globalsportVal = useRecoilValue(globalsport)
     const handleDateChange = (e : any) => {
         console.log("date ==", e.target.value);
         
@@ -25,6 +30,8 @@ const Shedule = () => {
             let res = await axios.post('/api/getcenters',{})
             if(res.status === 200){
                 setcenterarray(res.data.centers)
+                console.log(res);
+                
             }
           } catch (error) {
             console.log('error', error);
@@ -52,10 +59,10 @@ const Shedule = () => {
                     <SportsComponent value = {value}/>
                 ))}
                 
-                {/* <div className='px-2 hover:cursor-pointer hover:bg-slate-300 flex justify-center items-center h-[100%]'>Batmenton</div> */}
             </div>
         </div>
-        <SheduleSlots/>
+        {!(globalcenterVal == undefined || globalsportVal == undefined) && <SheduleSlots/>}
+        {(globalcenterVal == undefined || globalsportVal == undefined) && <Nothing/> }  
     </div>
   )
 }

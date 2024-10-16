@@ -2,7 +2,7 @@
 
 import { atom } from 'recoil'
 
-export const globalsport = atom({
+export const globalsport = atom<any>({
     key: 'globalsport',
-    default : "default"
+    default : undefined
   });
