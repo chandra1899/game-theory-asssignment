@@ -1,49 +1,61 @@
 "use client"
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SheduleTop from './SheduleTop'
 import SheduleSlots from './SheduleSlots'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { globaldate } from '@/store/atom/globaldate'
+import axios from 'axios'
+import { centerarray } from '@/store/atom/centerarray'
+import CenterComponent from './CenterComponent'
+import SportsComponent from './SportsComponent'
+import { sportarray } from '@/store/atom/sportarray'
 
 const Shedule = () => {
-
+    const setcenterarray = useSetRecoilState(centerarray)
+    const centerarrayVal = useRecoilValue(centerarray)
+    const sportarrayVal = useRecoilValue(sportarray)
+    const globaldateVal = useRecoilValue(globaldate)
+    const handleDateChange = (e : any) => {
+        console.log("date ==", e.target.value);
+        
+    }
+    const getcenters = async () => {
+        try {
+            let res = await axios.post('/api/getcenters',{})
+            if(res.status === 200){
+                setcenterarray(res.data.centers)
+            }
+          } catch (error) {
+            console.log('error', error);
+          }
+    }
+    useEffect(() => {
+        getcenters()
+    }, [])
   return (
     <div className='flex flex-col items-center w-[100%] mt-1 p-1 px-3'>
         <SheduleTop/>
         <h1 className='w-[100%] pl-4 mt-3 text-[1.5rem] font-bold my-2'>Shedule</h1>
         <div className='flex flex-row w-[100%] ml-7 my-3'>
-            <input type="date" className='bg-slate-300 text-[0.9rem] px-2 py-1 rounded-md h-[28px] ' />
+            <div>select center :- </div>
             <div className='flex flex-row justify-center items-center w-auto border-2 border-slate-300 mx-2 rounded-md text-[0.9rem]'>
-                <div className='px-2 hover:cursor-pointer hover:bg-slate-300 flex justify-center items-center h-[100%]'>swimming</div>
-                <div className='px-2 hover:cursor-pointer hover:bg-slate-300 flex justify-center items-center h-[100%]'>Batmenton</div>
+                {centerarrayVal.map((value : any) => (
+                        <CenterComponent value = {value} />
+                ))}
+            </div>
+        </div>
+        <div className='flex flex-row w-[100%] ml-7 my-3'>
+            <input type="date" className='bg-slate-300 text-[0.9rem] px-2 py-1 rounded-md h-[28px] ' value={globaldateVal} onChange={handleDateChange} />
+            <div className='flex flex-row justify-center items-center w-auto border-2 border-slate-300 mx-2 rounded-md text-[0.9rem]'>
+                {sportarrayVal.map((value : any) => (
+                    <SportsComponent value = {value}/>
+                ))}
+                
+                {/* <div className='px-2 hover:cursor-pointer hover:bg-slate-300 flex justify-center items-center h-[100%]'>Batmenton</div> */}
             </div>
         </div>
         <SheduleSlots/>
-        <div className='w-[100%] p-2 ml-7 my-2 flex flex-row'>
-            <div className='flex flex-row items-center mx-2'>
-               <p className='h-[15px] w-[15px] bg-yellow-200 mx-3'></p>
-               <p>Booking</p>
-            </div>
-            <div className='flex flex-row items-center mx-2'>
-                <p className='h-[15px] w-[15px] bg-green-200 mx-3'></p>
-                <p>Checked-in</p>
-            </div>
-            <div className='flex flex-row items-center mx-2'>
-                <p className='h-[15px] w-[15px] bg-blue-200 mx-3'></p>
-                <p>Coaching</p>
-            </div>
-            <div className='flex flex-row items-center mx-2'>
-                <p className='h-[15px] w-[15px] bg-slate-100 mx-3'></p>
-                <p>Blocked/Tournment</p>
-            </div>
-            <div className='flex flex-row items-center mx-2'>
-               <p className='h-[15px] w-[15px] bg-slate-300 mx-3'></p>
-               <p>Completed</p>
-            </div>
-            <div className='flex flex-row items-center mx-2'>
-               <p className='h-[15px] w-[15px] bg-red-200 mx-3'></p>
-               <p>Pending payment or Collect Items</p>
-            </div>
-        </div>
     </div>
   )
 }

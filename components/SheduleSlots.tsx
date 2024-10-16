@@ -1,9 +1,14 @@
+"use client"
+
 import React from 'react'
 import SubSlots from './SubSlots'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { isbooknowopen } from '@/store/atom/isbooknowopen'
 
 const DAY = ["4 am", "5 am", "6 am", "7 am", "8 am", "9 am", "10 am"]
 
 const SheduleSlots = () => {
+  const setIsbooknowopen = useSetRecoilState(isbooknowopen)
   return (
     <div className='w-[95%] h-[70vh] border-2 border-slate-300 ml-2 mt-2 mr-7 rounded-lg overflow-y-scroll '>
       <div className='flex flex-row w-[100%] '>
