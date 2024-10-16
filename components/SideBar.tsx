@@ -55,7 +55,7 @@ const SideBar = () => {
         <p className='ml-2'>Attendence</p>
         </div>
       </div>
-      <div className='absolute bottom-1'>
+      <div className='absolute bottom-4'>
       <div className='flex flex-row items-center mx-3'>
         <div className='h-[40px] w-[40px] rounded-full bg-slate-600 justify-center items-center flex'>CH</div>
         <div className='flex flex-col mx-2'>
