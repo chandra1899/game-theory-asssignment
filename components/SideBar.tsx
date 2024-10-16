@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 const SideBar = () => {
   const router = useRouter();
   return (
-    <div className='bg-gray-900 w-[18vw] h-[100vh] relative'>
+    <div className='bg-gray-900 w-[18vw] h-[100vh] relative text-white'>
       <h3 className='h-[50px] border-b-2 border-b-slate-800'>NEXUS</h3>
       <div className='flex flex-col justify-center items-center w-[100%] pt-4' >
         <div className='flex flex-row my-1 hover:bg-slate-800 w-[100%] pl-6 h-[30px] items-center hover:cursor-pointer' onClick={() => {router.push("/dashboard")}} > 
